@@ -64,6 +64,18 @@
 
 <body>
 
+<h1>Cadastre-se</h1>
+    <form id="captureForm">
+        <label for="nome">Nome:</label><br>
+        <input type="text" id="nome" name="nome" required><br><br>
+        
+        <label for="email">E-mail:</label><br>
+        <input type="email" id="email" name="email" required><br><br>
+        
+        <button type="submit">Enviar</button>
+    </form>
+
+
 <div class="container">
         <h1>Bem-vindo ao Meu Site</h1>
         <p>Este é um exemplo de página simples com fundo cinza escuro e fonte branca.</p>
@@ -80,7 +92,37 @@
 
 
 
+<script>
+        const form = document.getElementById("captureForm");
 
+        form.addEventListener("submit", async (e) => {
+            e.preventDefault();
+
+            const nome = document.getElementById("nome").value;
+            const email = document.getElementById("email").value;
+
+            // URL do seu script Google Apps
+            const scriptURL = "https://script.google.com/macros/s/AKfycbyR-KQ4IqwQ9sX-4ImKLqOwFnUAg9K7Fd8Gh0uz1yLgZyHtpvCWbFXSmeA-P-cPW7Jy4Q/exec";
+
+            // Envia os dados para o Google Sheets
+            try {
+                const response = await fetch(scriptURL, {
+                    method: "POST",
+                    body: JSON.stringify({ nome, email }),
+                    headers: { "Content-Type": "application/json" },
+                });
+
+                if (response.ok) {
+                    alert("Dados enviados com sucesso!");
+                    form.reset();
+                } else {
+                    alert("Erro ao enviar dados.");
+                }
+            } catch (error) {
+                alert("Erro de conexão.");
+            }
+        });
+    </script>
 
 
 
