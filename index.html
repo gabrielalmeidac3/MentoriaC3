@@ -3,79 +3,89 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cadastro</title>
+    <title>Formulário Simples</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            background-color: #f5f5f5;
+            margin: 20px;
+            padding: 0;
+            text-align: center;
         }
         form {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            width: 300px;
+            display: inline-block;
+            text-align: left;
+            margin-top: 20px;
         }
-        input, button {
-            padding: 10px;
-            font-size: 16px;
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input {
+            width: 300px;
+            padding: 8px;
+            margin-bottom: 10px;
+            font-size: 14px;
         }
         button {
-            background-color: #4CAF50;
-            color: white;
+            background-color: #007BFF;
+            color: #fff;
             border: none;
+            padding: 10px 20px;
             cursor: pointer;
         }
         button:hover {
-            background-color: #45a049;
+            background-color: #0056b3;
+        }
+        .mensagem {
+            margin-top: 20px;
+            font-size: 16px;
         }
     </style>
 </head>
 <body>
-    <h1>Cadastro</h1>
-    <form id="cadastroForm">
+    <h1>Formulário Simples</h1>
+    <form id="formulario">
+        <label for="nome">Nome:</label>
         <input type="text" id="nome" name="nome" placeholder="Digite seu nome" required>
+        <label for="email">Email:</label>
         <input type="email" id="email" name="email" placeholder="Digite seu email" required>
         <button type="submit">Enviar</button>
     </form>
-    <p id="mensagem"></p>
+    <div class="mensagem" id="mensagem"></div>
+
     <script>
-        const apiURL = "https://script.google.com/macros/s/AKfycbyR-KQ4IqwQ9sX-4ImKLqOwFnUAg9K7Fd8Gh0uz1yLgZyHtpvCWbFXSmeA-P-cPW7Jy4Q/exec"; // Certifique-se de que a URL esteja correta
+        const formulario = document.getElementById('formulario');
+        const mensagem = document.getElementById('mensagem');
 
-form.addEventListener("submit", async (e) => {
-    e.preventDefault();
+        formulario.addEventListener('submit', async (e) => {
+            e.preventDefault();
 
-    const nome = document.getElementById("nome").value;
-    const email = document.getElementById("email").value;
+            const nome = document.getElementById('nome').value;
+            const email = document.getElementById('email').value;
 
-    try {
-        const response = await fetch(apiURL, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ nome, email }),
+            const apiURL = "https://script.google.com/macros/s/AKfycbyR-KQ4IqwQ9sX-4ImKLqOwFnUAg9K7Fd8Gh0uz1yLgZyHtpvCWbFXSmeA-P-cPW7Jy4Q/exec"; // Substitua pela URL do Apps Script
+
+            try {
+                const resposta = await fetch(apiURL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ nome, email })
+                });
+
+                const resultado = await resposta.json();
+                if (resultado.status === 'success') {
+                    mensagem.textContent = 'Dados enviados com sucesso!';
+                    mensagem.style.color = 'green';
+                    formulario.reset();
+                } else {
+                    throw new Error('Falha ao enviar os dados.');
+                }
+            } catch (erro) {
+                mensagem.textContent = `Erro: ${erro.message}`;
+                mensagem.style.color = 'red';
+            }
         });
-
-        const result = await response.json();
-        if (result.status === "success") {
-            mensagem.textContent = "Dados enviados com sucesso!";
-            mensagem.style.color = "green";
-            form.reset();
-        } else {
-            throw new Error(result.message || "Erro no envio");
-        }
-    } catch (error) {
-        mensagem.textContent = `Erro ao enviar os dados: ${error.message}`;
-        mensagem.style.color = "red";
-    }
-});
     </script>
 </body>
 </html>
