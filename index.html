@@ -1,154 +1,82 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-
-    <title>Meu Site</title>
+    <title>Cadastro</title>
     <style>
         body {
-            background-color: #2c2c2c; /* Cinza escuro */
-            color: white;
             font-family: Arial, sans-serif;
             margin: 0;
-            padding: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            background-color: #f5f5f5;
         }
-        .container {
-            text-align: center;
-            padding: 50px;
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            width: 300px;
         }
-        h1 {
-            font-size: 3em;
-            margin-bottom: 20px;
+        input, button {
+            padding: 10px;
+            font-size: 16px;
         }
-        iframe {
-            margin-bottom: 100px;
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
         }
-        p {
-            font-size: 1.2em;
-        }
-        a {
-            color: #4CAF50; /* Verde */
-            text-decoration: none;
-        }
-        a:hover {
-            text-decoration: underline;
+        button:hover {
+            background-color: #45a049;
         }
     </style>
-
 </head>
-
-<header>
-
-<style>.ocultar{display:none;}</style> 
-<style>
-		.ocultar {
-			color: #ffffff;
-			background-color: #007ae6;
-			font-size: 19px;
-			border: 1px solid #4983ee;
-			border-radius: 10px;
-			padding: 15px 50px;
-			cursor: pointer
-			
-			
-		}
-		.ocultar:hover {
-			color: #2d63c8;
-			background-color: #ffffff;
-		}
-	</style>
-
-</header>
-
 <body>
-
-<h1>Cadastre-se</h1>
-    <form id="captureForm">
-        <label for="nome">Nome:</label><br>
-        <input type="text" id="nome" name="nome" required><br><br>
-        
-        <label for="email">E-mail:</label><br>
-        <input type="email" id="email" name="email" required><br><br>
-        
+    <h1>Cadastro</h1>
+    <form id="cadastroForm">
+        <input type="text" id="nome" name="nome" placeholder="Digite seu nome" required>
+        <input type="email" id="email" name="email" placeholder="Digite seu email" required>
         <button type="submit">Enviar</button>
     </form>
-
-
-<div class="container">
-        <h1>Bem-vindo ao Meu Site</h1>
-        <p>Este é um exemplo de página simples com fundo cinza escuro e fonte branca.</p>
-        <p><a href="#sobre">Saiba mais</a></p>
-
-
-<iframe width="345" height="194" src="https://www.youtube.com/embed/8s6hcapMuJ8" title="Vídeo de Vendas Mentoria 3X 2" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-
-<a href="https://go.perfectpay.com.br/PPU38CO3Q65" style="text-decoration:none" target="_top"><button class="ocultar">Entrar para a Mentoria C3</button></a>
-
-
-    </div>
-
-
-
-
-<script>
-        const form = document.getElementById("captureForm");
+    <p id="mensagem"></p>
+    <script>
+        const form = document.getElementById("cadastroForm");
+        const mensagem = document.getElementById("mensagem");
 
         form.addEventListener("submit", async (e) => {
             e.preventDefault();
-
+            
             const nome = document.getElementById("nome").value;
             const email = document.getElementById("email").value;
 
-            // URL do seu script Google Apps
-            const scriptURL = "https://script.google.com/macros/s/AKfycbyR-KQ4IqwQ9sX-4ImKLqOwFnUAg9K7Fd8Gh0uz1yLgZyHtpvCWbFXSmeA-P-cPW7Jy4Q/exec";
+            const apiURL = "https://script.google.com/macros/s/AKfycbyR-KQ4IqwQ9sX-4ImKLqOwFnUAg9K7Fd8Gh0uz1yLgZyHtpvCWbFXSmeA-P-cPW7Jy4Q/exec"; // Substitua pela URL do Apps Script
 
-            // Envia os dados para o Google Sheets
             try {
-                const response = await fetch(scriptURL, {
+                const response = await fetch(apiURL, {
                     method: "POST",
-                    body: JSON.stringify({ nome, email }),
                     headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ nome, email }),
                 });
 
-                if (response.ok) {
-                    alert("Dados enviados com sucesso!");
+                const result = await response.json();
+                if (result.status === "success") {
+                    mensagem.textContent = "Dados enviados com sucesso!";
+                    mensagem.style.color = "green";
                     form.reset();
                 } else {
-                    alert("Erro ao enviar dados.");
+                    throw new Error("Erro no envio");
                 }
             } catch (error) {
-                alert("Erro de conexão.");
+                mensagem.textContent = "Erro ao enviar os dados.";
+                mensagem.style.color = "red";
             }
         });
     </script>
-
-
-
-
-<script type="text/javascript">
-var tmin = 0;
-var tseg = 04;
-  
-var tpitch = (tmin * 60000) + (tseg * 1000);
-setTimeout('show()', tpitch);
-console.log('pitch em:', tpitch,'ms - totalizando',tmin,'min','e',tseg,'seg'); 
-function show(){
-var list = document.getElementsByClassName('ocultar');
-for (var i = 0; i < list.length; i++) {
-    list[i].style.visibility = 'visible';
-    list[i].style.display = 'block';
-    }
-}
-</script>
-
-
-
 </body>
-
-
-
-
-
 </html>
