@@ -46,37 +46,36 @@
     </form>
     <p id="mensagem"></p>
     <script>
-        const form = document.getElementById("cadastroForm");
-        const mensagem = document.getElementById("mensagem");
+        const apiURL = "https://script.google.com/macros/s/AKfycbyR-KQ4IqwQ9sX-4ImKLqOwFnUAg9K7Fd8Gh0uz1yLgZyHtpvCWbFXSmeA-P-cPW7Jy4Q/exec"; // Certifique-se de que a URL esteja correta
 
-        form.addEventListener("submit", async (e) => {
-            e.preventDefault();
-            
-            const nome = document.getElementById("nome").value;
-            const email = document.getElementById("email").value;
+form.addEventListener("submit", async (e) => {
+    e.preventDefault();
 
-            const apiURL = "https://script.google.com/macros/s/AKfycbyR-KQ4IqwQ9sX-4ImKLqOwFnUAg9K7Fd8Gh0uz1yLgZyHtpvCWbFXSmeA-P-cPW7Jy4Q/exec"; // Substitua pela URL do Apps Script
+    const nome = document.getElementById("nome").value;
+    const email = document.getElementById("email").value;
 
-            try {
-                const response = await fetch(apiURL, {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ nome, email }),
-                });
-
-                const result = await response.json();
-                if (result.status === "success") {
-                    mensagem.textContent = "Dados enviados com sucesso!";
-                    mensagem.style.color = "green";
-                    form.reset();
-                } else {
-                    throw new Error("Erro no envio");
-                }
-            } catch (error) {
-                mensagem.textContent = "Erro ao enviar os dados.";
-                mensagem.style.color = "red";
-            }
+    try {
+        const response = await fetch(apiURL, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ nome, email }),
         });
+
+        const result = await response.json();
+        if (result.status === "success") {
+            mensagem.textContent = "Dados enviados com sucesso!";
+            mensagem.style.color = "green";
+            form.reset();
+        } else {
+            throw new Error(result.message || "Erro no envio");
+        }
+    } catch (error) {
+        mensagem.textContent = `Erro ao enviar os dados: ${error.message}`;
+        mensagem.style.color = "red";
+    }
+});
     </script>
 </body>
 </html>
