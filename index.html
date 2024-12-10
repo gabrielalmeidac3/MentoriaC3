@@ -1,91 +1,177 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Formulário Simples</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-            padding: 0;
-            text-align: center;
-        }
-        form {
-            display: inline-block;
-            text-align: left;
-            margin-top: 20px;
-        }
-        label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
-        }
-        input {
-            width: 300px;
-            padding: 8px;
-            margin-bottom: 10px;
-            font-size: 14px;
-        }
-        button {
-            background-color: #007BFF;
-            color: #fff;
-            border: none;
-            padding: 10px 20px;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: #0056b3;
-        }
-        .mensagem {
-            margin-top: 20px;
-            font-size: 16px;
-        }
-    </style>
+<link href="https://fonts.googleapis.com/css2?family=Clear+Sans:wght@400&display=swap" rel="stylesheet">
+    <title>Formulário Mentoria C3</title>
+<style>
+
+/* styles.css - lembrando que aqui o style está dentro do head, no outro formulário estava fora, qualquer coisa é só colcar dentro do head*/
+
+
+
+* {
+    box-sizing: border-box;
+}
+body {
+    margin: 0;
+    padding: 0 7%; /* Adiciona espaço nas bordas */
+    font-family: Arial, sans-serif;
+    background-color: #000; /* Fundo preto */
+    color: #fff; /* Fonte branca para contraste */
+   display: flex;
+    justify-content: center;
+    min-height: 100vh
+}
+
+
+
+h2 {
+    text-align: center;
+    margin-bottom: 0px;
+margin-top: 60px;
+    font-size: 40px;
+}
+
+
+.profile {
+margin-top: 80px;
+margin-bottom: 40px;
+}
+
+.textinho {
+text-align: justify;
+  margin-left: auto;
+    margin-right: auto;
+max-width: 400px; /* Limita a largura do conteúdo */
+margin-bottom: 0px;
+    margin: 0 auto; /* Centraliza horizontalmente */total */
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 0.9em;
+}
+
+.main-container {
+    width: 100%;
+    max-width: 700px; /* Limita a largura do conteúdo */
+
+}
+
+.subtexto {
+margin-bottom: 40px;
+}
+
+
+input, textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #333;
+    border-radius: 5px;
+    background-color: #2c2c2c; /* Fundo para campos */
+    color: #fff;
+    font-size: 1em;
+}
+
+input::placeholder, textarea::placeholder {
+    color: #aaa; /* Placeholder mais sutil */
+}
+
+button {
+    width: 100%;
+    padding: 10px;
+    background-color: #007BFF; /* Azul vibrante */
+    border: none;
+    border-radius: 5px;
+    color: #fff;
+    font-size: 1em;
+    cursor: pointer;
+}
+
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
+}
+
+button:hover {
+    background-color: #0056b3; /* Azul mais escuro no hover */
+}
+
+
+
+.form-container {
+    background-color: #1c1c1c; /* Um tom de preto mais claro */
+    padding: 20px;
+    border-radius: 10px;
+    width: 100%;
+    max-width: 400px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.5);
+    margin: 0 auto; /* Centraliza a div no eixo horizontal */
+
+
+
+</style>
 </head>
+
 <body>
-    <h1>Formulário Simples</h1>
-    <form id="formulario">
-        <label for="nome">Nome:</label>
-        <input type="text" id="nome" name="nome" placeholder="Digite seu nome" required>
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" placeholder="Digite seu email" required>
-        <button type="submit">Enviar</button>
-    </form>
-    <div class="mensagem" id="mensagem"></div>
+<div class="main-container">
+<h2>Como terapeutas estão vendendo mentorias acima de R$ 1.000,00 </h2> <p class="subtexto" style="font-size:20px; text-align: center;"> Sem criar conteúdo e sem depender de seguidores. </p>
+    <div class="form-container"> 
+        <form method="post" name="contact-form">
+            <label for="name">Nome</label>
+            <input type="text" id="name" name="Nome" placeholder="Digite seu nome" required>
 
-    <script>
-        const formulario = document.getElementById('formulario');
-        const mensagem = document.getElementById('mensagem');
+            <label for="tel">WhastApp</label>
+            <input type="number" id="tel" name="WhatsApp" placeholder="Digite seu WhatsApp com DDD" required pattern="\d*" oninput="this.value = this.value.replace(/[^0-9]/g, '');">
 
-        formulario.addEventListener('submit', async (e) => {
-            e.preventDefault();
 
-            const nome = document.getElementById('nome').value;
-            const email = document.getElementById('email').value;
+            <button type="submit">Assistir o vídeo</button>
+        </form>
+    </div>
 
-            const apiURL = "https://script.google.com/macros/s/AKfycbyR-KQ4IqwQ9sX-4ImKLqOwFnUAg9K7Fd8Gh0uz1yLgZyHtpvCWbFXSmeA-P-cPW7Jy4Q/exec"; // Substitua pela URL do Apps Script
 
-            try {
-                const resposta = await fetch(apiURL, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ nome, email })
-                });
 
-                const resultado = await resposta.json();
-                if (resultado.status === 'success') {
-                    mensagem.textContent = 'Dados enviados com sucesso!';
-                    mensagem.style.color = 'green';
-                    formulario.reset();
-                } else {
-                    throw new Error('Falha ao enviar os dados.');
-                }
-            } catch (erro) {
-                mensagem.textContent = `Erro: ${erro.message}`;
-                mensagem.style.color = 'red';
-            }
-        });
-    </script>
+
+<div style="text-align: center" class="profile">
+    <img src="https://drive.google.com/thumbnail?id=1ik8kVtEVjYx1Ju8f2Sid-BsKG3T8Vdmy" alt="Gabriel Almeida" class="profile-img">
+    <p class="profile-name">Por Gabriel Almeida | @gabrielproposito</p>
+</div>
+<div class="textinho" style="font-family: 'Clear Sans', sans-serif; font-size: 16px;">
+ <p>Decidi entrar no marketing digital pra vender aulas de música online, e foi uma jornada muito bem-sucedida.</p>
+    <p>Com o tempo, comecei a ajudar outras pessoas a alcançar seus objetivos na internet, especialmente profissionais da área de desenvolvimento pessoal, como terapeutas.</p>
+    <p>Essa experiência transformou minha trajetória e me mostrou como posso impactar positivamente a vida de muitas pessoas direta e indiretamente.</p>
+    <p>Estou aqui para ajudar você a conquistar seus próprios objetivos e crescer junto. Vamos nessa!</p>
+</div>
+
+
+
+
+</div>
+
+
 </body>
 </html>
+
+<script>
+const scriptURL = 'https://script.google.com/macros/s/AKfycbyR-KQ4IqwQ9sX-4ImKLqOwFnUAg9K7Fd8Gh0uz1yLgZyHtpvCWbFXSmeA-P-cPW7Jy4Q/exec'
+
+const form = document.forms['contact-form']
+
+form.addEventListener('submit', e => {
+    e.preventDefault(); // Evita o envio padrão do formulário
+  
+    // Redireciona para uma página de agradecimento ou carregamento
+    window.location.href = "https://viocomg.github.io/MentoriaC3";
+
+    // Continua processando o envio em segundo plano
+    fetch(scriptURL, { method: 'POST', body: new FormData(form) })
+        .catch(error => console.error('Erro!', error.message));
+});
+
+
+</script>
